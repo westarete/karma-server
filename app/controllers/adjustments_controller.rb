@@ -53,10 +53,10 @@ class AdjustmentsController < ApplicationController
     if params[:adjustment] and params[:adjustment][:bucket_id]
       @bucket = Bucket.find(params[:adjustment][:bucket_id])
     end
-    @adjustment = Adjustment.new
+    @adjustment = Adjustment.new(params[:adjustment])
     @adjustment.user = @user
     @adjustment.bucket = @bucket
-    if params[:adjustment] and @adjustment.update_attributes(params[:adjustment])
+    if @adjustment.save
       flash[:success] = "Karma was successfully adjusted"
       respond_to do |format|
         format.html{ redirect_to adjustments_path(@user, @bucket) }

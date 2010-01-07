@@ -2,26 +2,6 @@ Feature: Adjustments via XML
   In order to modify and report on karma
   As a client
   I want to be able to read and manipulate user's karma via the XML API
-  
-  # This is the typical set of adjustments, buckets, and users that is 
-  # referenced in some scenarios below:
-  # 
-  # Background:
-  #     Given the following users:
-  #       | id  | permalink      | created_at              | updated_at              |
-  #       | 1   | bob            | 2009-09-10 19:55:35 UTC | 2009-09-10 19:55:35 UTC |
-  #       | 2   | harry          | 2009-09-10 13:57:01 UTC | 2009-09-10 13:57:01 UTC |
-  #     And the following buckets:
-  #       | id | permalink  | created_at              | updated_at              |
-  #       | 3  | plants     | 2009-09-10 13:57:14 UTC | 2009-09-10 13:57:14 UTC |
-  #       | 4  | animals    | 2009-09-10 13:57:14 UTC | 2009-09-10 13:57:14 UTC |
-  #     And the following adjustments:
-  #       | id | user_id | bucket_id | value | created_at              | updated_at              |
-  #       | 5  | 1       | 3         | 1     | 2009-09-10 15:06:25 UTC | 2009-09-10 15:06:25 UTC |
-  #       | 6  | 1       | 4         | 2     | 2009-09-10 15:06:32 UTC | 2009-09-10 15:06:32 UTC |
-  #       | 7  | 2       | 3         | 3     | 2009-09-10 15:06:25 UTC | 2009-09-10 15:06:25 UTC |
-  #       | 8  | 2       | 4         | 4     | 2009-09-10 15:06:32 UTC | 2009-09-10 15:06:32 UTC |
-  #       | 9  | 2       | 4         | -1    | 2009-09-10 15:06:32 UTC | 2009-09-10 15:06:32 UTC |
 
   Scenario: Read list of adjustments
     Given a typical set of adjustments, buckets, and users
@@ -32,18 +12,18 @@ Feature: Adjustments via XML
       <?xml version="1.0" encoding="UTF-8"?>
       <adjustments type="array">
         <adjustment>
-          <id type="integer">4</id>
+          <id type="integer">104</id>
           <value type="integer">4</value>
-          <path>/users/harry/buckets/animals/adjustments/4.xml</path>
+          <path>/users/harry/buckets/animals/adjustments/104.xml</path>
           <user-permalink>harry</user-permalink>
           <bucket-permalink>animals</bucket-permalink>
           <created-at type="datetime">2009-09-10T15:06:32Z</created-at>
           <updated-at type="datetime">2009-09-10T15:06:32Z</updated-at>
         </adjustment>
         <adjustment>
-          <id type="integer">5</id>
+          <id type="integer">105</id>
           <value type="integer">-1</value>
-          <path>/users/harry/buckets/animals/adjustments/5.xml</path>
+          <path>/users/harry/buckets/animals/adjustments/105.xml</path>
           <user-permalink>harry</user-permalink>
           <bucket-permalink>animals</bucket-permalink>
           <created-at type="datetime">2009-09-10T15:06:32Z</created-at>
@@ -83,15 +63,15 @@ Feature: Adjustments via XML
   
   Scenario: Read adjustment
     Given a typical set of adjustments, buckets, and users
-    When I GET "/users/harry/buckets/animals/adjustments/4.xml"
+    When I GET "/users/harry/buckets/animals/adjustments/104.xml"
     Then I should get a 200 OK response
     And I should get an XML response body like:
     """
       <?xml version="1.0" encoding="UTF-8"?>
       <adjustment>
-          <id type="integer">4</id>
+          <id type="integer">104</id>
           <value type="integer">4</value>
-          <path>/users/harry/buckets/animals/adjustments/4.xml</path>
+          <path>/users/harry/buckets/animals/adjustments/104.xml</path>
           <user-permalink>harry</user-permalink>
           <bucket-permalink>animals</bucket-permalink>
           <created-at type="datetime">2009-09-10T15:06:32Z</created-at>
@@ -160,42 +140,36 @@ Feature: Adjustments via XML
     And I should get an empty response body
   
   Scenario: Create an adjustment
-    Given a user "Harry"
-    And a bucket "Animals"
-    When I POST "/users/harry/buckets/animals/adjustments.xml" with a body like:
-    """
-      <adjustment>
-        <value type="integer">2</value>
-      </adjustment>
-    """
+    Given a typical set of adjustments, buckets, and users
+    When I POST "/users/harry/buckets/animals/adjustments.xml" with body "adjustment[value]=2"
     Then I should get a 201 Created response
     And I should get an XML response
     And pending: I should receive the object in XML
   
   Scenario: Attempt to create an adjustment with no value
-    Given a user "Harry"
-    And a bucket "Animals"
+    Given a typical set of adjustments, buckets, and users
     When I POST "/users/harry/buckets/animals/adjustments.xml" with body ""
     Then I should get a 422 Unprocessable Entity response
     And I should get an XML response body like:
     """
       <?xml version="1.0" encoding="UTF-8"?>
       <errors>
-        <error>Value can not be blank</error>
+        <error>Value can't be blank</error>
+        <error>Value is not a number</error>
       </errors>
     """
   
   Scenario: Destroy an adjustment
     Given a typical set of adjustments, buckets, and users
-    When I DELETE "/users/harry/buckets/animals/adjustments/4.xml"
+    When I DELETE "/users/harry/buckets/animals/adjustments/104.xml"
     Then I should get a 200 OK response
     And I should get an XML response body like:
     """
       <?xml version="1.0" encoding="UTF-8"?>
       <adjustment>
-          <id type="integer">4</id>
+          <id type="integer">104</id>
           <value type="integer">4</value>
-          <path>/users/harry/buckets/animals/adjustments/4.xml</path>
+          <path>/users/harry/buckets/animals/adjustments/104.xml</path>
           <user-permalink>harry</user-permalink>
           <bucket-permalink>animals</bucket-permalink>
           <created-at type="datetime">2009-09-10T15:06:32Z</created-at>
@@ -226,3 +200,4 @@ Feature: Adjustments via XML
     When I DELETE "/users/doesnt-exist/buckets/doesnt-exist/adjustments/300.xml"
     Then I should get a 404 Not Found response
     And I should get an empty response body
+  
