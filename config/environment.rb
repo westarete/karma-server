@@ -18,6 +18,9 @@ Rails::Initializer.run do |config|
 
   # Haml view templates are an alternative to erb.
   config.gem 'haml', :version => '2.2.3'
+  
+  # Queue long running jobs to run in the background.
+  config.gem 'delayed_job', :version => '1.8.4'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
