@@ -121,11 +121,11 @@ Feature: Adjustments via JSON
     Then I should get a 404 Not Found response
     And I should get an empty response body
   
-  Scenario: Create an adjustment
-    Given a typical set of adjustments, buckets, and users
-    When I POST "/users/harry/buckets/animals/adjustments.json" with body "adjustment[value]=2"
-    Then I should get a 201 Created response
-    And pending: I should receive the object in JSON
+  # Scenario: Create an adjustment
+  #   Given a typical set of adjustments, buckets, and users
+  #   When I POST "/users/harry/buckets/animals/adjustments.json" with body "adjustment[value]=2"
+  #   Then I should get a 201 Created response
+  #   And pending: I should receive the object in JSON
   
   Scenario: Attempt to create an adjustment with no value
     Given a typical set of adjustments, buckets, and users

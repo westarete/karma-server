@@ -25,4 +25,4 @@ config.gem 'annotate', :version => '2.0.2'
 config.gem "newrelic_rpm", :version => '2.9.4'
 
 # Capistrano deployment helpers to keep our recipe simple.
-config.gem 'westarete-capistrano-helpers', :lib => false, :version => '0.0.2', :source => 'http://gems.github.com'
+config.gem 'capistrano-helpers', :lib => false, :version => '0.3.2'
