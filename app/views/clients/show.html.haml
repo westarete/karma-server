@@ -1,0 +1,19 @@
+%h1= @client.hostname
+
+%dl#client
+  %dt Hostname:
+  %dd= @client.hostname
+  %dt IP Address:
+  %dd= @client.ip_address
+  %dt API Key:
+  %dd= @client.api_key
+  %dt Created:
+  %dd= @client.created_at
+  %dt Last Updated:
+  %dd= @client.updated_at
+
+%p
+  = link_to 'edit', edit_client_path(@client)
+  = link_to 'delete', @client, :method => :delete, :confirm => "Are you sure you want to permanently delete access for #{@client.hostname}?"
+%p
+  = link_to 'client list', clients_path

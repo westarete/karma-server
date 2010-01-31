@@ -1,0 +1,7 @@
+%h1 Edit Client
+
+- form_for @client do |f|
+  = render :partial => 'form', :locals => { :f => f }
+  = f.submit 'Save'
+  = link_to 'cancel', clients_path
+  
