@@ -26,5 +26,11 @@ describe Client do
     @client.api_key.length.should > 10
   end
 
+  it "should not allow mass assignment of the api key" do
+    original_value = @client.api_key
+    @client.update_attributes(:api_key => 'something else')
+    @client.api_key.should == original_value
+  end
+
 end
 

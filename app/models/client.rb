@@ -14,6 +14,8 @@ class Client < ActiveRecord::Base
   validates_uniqueness_of :hostname, :ip_address
   
   before_validation_on_create :generate_api_key
+
+  attr_accessible :hostname, :ip_address
   
   # Regenerate and assign a new random API key.
   def generate_api_key
