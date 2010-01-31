@@ -26,8 +26,8 @@ class ApplicationController < ActionController::Base
   protected
   
   def require_client_login
+    client = Client.find_by_ip_address(request.env['REMOTE_ADDR'])
     authenticate_or_request_with_http_basic do |username, password|
-      client = Client.find_by_ip_address(request.env['REMOTE_ADDR'])
       if client && username == '' && password == client.api_key
         @current_user = client
       else

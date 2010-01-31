@@ -3,6 +3,9 @@ Feature: Users via XML
   As a client
   I want to be able to create, read, update, and delete User objects via XML.
 
+  Background:
+    Given I am authenticated as a valid client
+
   Scenario: Get a list of users
     Given the following users:
       | id | permalink | created_at          | updated_at          |

@@ -16,6 +16,11 @@ When /^I edit the ([^\"]*) with ([^\"]*) "([^\"]*)"$/ do |klass, method, value|
   visit "#{klass.pluralize.underscore}/#{value}/edit"
 end
 
+Given /^I am authenticated as a valid client$/ do 
+  client = Client.make(:ip_address => '127.0.0.1')
+  basic_auth('', client.api_key)
+end
+
 Given /^the following (\w+):$/ do |table_name, table|
   klass = table_name.classify.constantize
   table.hashes.each do |hash|
