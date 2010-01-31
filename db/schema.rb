@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100107030157) do
+ActiveRecord::Schema.define(:version => 20100131014645) do
 
   create_table "adjustments", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(:version => 20100107030157) do
 
   create_table "buckets", :force => true do |t|
     t.string   "permalink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "api_key",    :null => false
+    t.string   "ip_address", :null => false
+    t.string   "hostname",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
