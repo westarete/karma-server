@@ -23,7 +23,10 @@ describe Client do
 
   it "should generate the API key automatically" do
     @client.api_key.should_not be_nil
-    @client.api_key.length.should > 10
+  end
+
+  it "should generate an API key of the maximum length allowed by HTTP basic authentication" do
+    @client.api_key.length.should == 20
   end
 
   it "should not allow mass assignment of the api key" do
