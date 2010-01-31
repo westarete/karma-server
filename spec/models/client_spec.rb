@@ -18,10 +18,13 @@ describe Client do
 
   it { should validate_presence_of :hostname }
   it { should validate_presence_of :ip_address }
-  it { should validate_presence_of :api_key }
   it { should validate_uniqueness_of :hostname }
   it { should validate_uniqueness_of :ip_address }
-  it { should validate_uniqueness_of :api_key }
+
+  it "should generate the API key automatically" do
+    @client.api_key.should_not be_nil
+    @client.api_key.length.should > 10
+  end
 
 end
 

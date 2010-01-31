@@ -31,5 +31,4 @@ end
 Client.blueprint do
   hostname
   ip_address
-  api_key { ActiveSupport::SecureRandom.hex(32) }
 end
