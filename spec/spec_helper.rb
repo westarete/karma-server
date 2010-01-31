@@ -48,3 +48,8 @@ end
 
 # Use machinist blueprints.
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+
+# Set the current request to use the given HTTP basic authentication
+def use_basic_auth(username, password)
+  request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
+end

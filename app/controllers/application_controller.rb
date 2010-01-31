@@ -6,9 +6,35 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :api_key
+
+  before_filter :require_login
+
+  def require_login
+    respond_to do |format|
+      format.html { true }
+      format.json { require_client_login }
+      format.xml  { require_client_login }
+    end
+    true
+  end
+  
+  def current_user
+    @current_user
+  end
   
   protected
+  
+  def require_client_login
+    authenticate_or_request_with_http_basic do |username, password|
+      client = Client.find_by_ip_address(request.env['REMOTE_ADDR'])
+      if client && username == '' && password == client.api_key
+        @current_user = client
+      else
+        @current_user = nil
+      end
+    end
+  end
   
   def rescue_action(exception)
     case exception
