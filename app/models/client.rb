@@ -10,6 +10,8 @@
 #  updated_at :datetime
 #
 class Client < ActiveRecord::Base
+  has_many :subscriptions, :dependent => :destroy
+
   validates_presence_of   :hostname, :ip_address, :api_key
   validates_uniqueness_of :hostname, :ip_address, :api_key
   validates_length_of     :api_key, :is => 20

@@ -32,3 +32,8 @@ Client.blueprint do
   hostname
   ip_address
 end
+
+Subscription.blueprint do
+  client
+  user
+end
