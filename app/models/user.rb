@@ -11,6 +11,8 @@
 class User < ActiveRecord::Base
   has_many :adjustments, :dependent => :destroy
   has_many :subscriptions, :dependent => :destroy
+  has_many :subscribers, :through => :subscriptions, :source => :client
+  
   validates_presence_of   :permalink
   validates_uniqueness_of :permalink
   validate :valid_permalink

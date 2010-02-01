@@ -25,4 +25,14 @@ class Adjustment < ActiveRecord::Base
   belongs_to :bucket
   
   attr_accessible :value
+  
+  after_save :notify_subscribers
+  
+  # Send out updates to all of the clients that have subscribed to karma
+  # changes for this user.
+  def notify_subscribers
+    self.user.subscribers.each do |client|
+      client.send_later(:push_changes, self.user)
+    end
+  end
 end

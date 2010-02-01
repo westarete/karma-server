@@ -74,6 +74,7 @@ class UsersController < ApplicationController
   #   GET /users/:permalink/karma.json
   def karma
     @user = User.find_by_permalink!(params[:id])
+    current_client.subscribe_to(@user) if current_client
     respond_to do |format|
       format.json { render :json => karma_for(@user) }
       format.xml  { render :xml  => karma_for(@user, :xml) }

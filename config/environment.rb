@@ -21,6 +21,9 @@ Rails::Initializer.run do |config|
   
   # Queue long running jobs to run in the background.
   config.gem 'delayed_job', :version => '1.8.4'
+  
+  # Push karma update notifications out to the web servers.
+  config.gem 'rest-client', :lib => 'restclient', :version => '1.3.0'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
