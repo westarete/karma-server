@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
     true
   end
   
-  def current_user
-    @current_user
+  def current_client
+    @current_client
   end
   
   protected
@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
     client = Client.find_by_ip_address(request.env['REMOTE_ADDR'])
     authenticate_or_request_with_http_basic do |username, password|
       if client && username == '' && password == client.api_key
-        @current_user = client
+        @current_client = client
       else
-        @current_user = nil
+        @current_client = nil
       end
     end
   end
